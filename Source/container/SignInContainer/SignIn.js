@@ -25,8 +25,8 @@ class SignIn extends Component {
             Username: '',
             Password: '',
             error: '',
-            timePassed: false,
-            Hidebtn: true,
+            // timePassed: false,
+            // Hidebtn: true,
         }
     }
 
@@ -52,7 +52,7 @@ class SignIn extends Component {
 
         this.setState({ showProgress: true })
         try {
-            let response = await fetch('http://192.168.1.99:3000/login/member', {
+            let response = await fetch('http://localhost:3000/login/member', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -63,8 +63,27 @@ class SignIn extends Component {
                     Password: this.state.Password,
                 })
             });
-
             let res = await response.text();
+            if (response.status == 200) {
+                //Handle success
+                //Alert.alert('llllllllllll');
+                let accessToken = res
+                //Alert.alert(response.token);
+                //Alert.alert(accessToken)
+                //On success we will store the access_token in the AsyncStorage
+                this.storeToken(accessToken);
+                this.props.navigation.navigate('AllScreen');
+            } else if(response.status == 401) {
+                //Handle error
+                let error = res;
+                Alert.alert('Wrong Password');
+                //throw error;
+            }else if(response.status == 402) {
+                //Handle error
+                let error = res;
+                Alert.alert('No datas');
+                //throw error;
+            }
             if (this.state.Username == "" && this.state.Password == "") {
                 Alert.alert('Please fill Username and Password!')
                 return 0
@@ -75,20 +94,9 @@ class SignIn extends Component {
                 Alert.alert('Please fill Password!')
                 return 0
             }
-
-            if (response.status == 200) {
-                //Handle success
-                let accessToken = res;
-                console.log(accessToken);
-                //On success we will store the access_token in the AsyncStorage
-                this.storeToken(accessToken);
-                this.redirect('AllScreen');
-            } else {
-                //Handle error
-                let error = res;
-                throw error;
+            if(response.status == 401){
+                Alert.alert('Wrong Password!')
             }
-
         } catch (error) {
             this.setState({ error: error });
             console.log("error " + error);
@@ -172,4 +180,4 @@ export default class App extends React.Component {
     }
 }
 
-//AppRegistry.registerComponent('SignIn', () => SignIn);
+AppRegistry.registerComponent('SignIn', () => SignIn);
