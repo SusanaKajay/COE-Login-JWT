@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
-
+import {
+  AppRegistry,
+} from 'react-native';
 //import Container
 import EventContainer from '../container/AllEvent/AllEvent';
 import RankContainer from '../container/RankContainer/All_Rank';

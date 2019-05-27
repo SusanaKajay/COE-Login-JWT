@@ -6,15 +6,18 @@ import {
     TouchableOpacity,
     TextInput,
     AsyncStorage,
+    Alert,
 } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { coin, box, calendar } from '../../../img/imgIndext';
 import { JoinHisAPI } from '../../themes/variables';
 import styles from './style';
 
+import AllScreen from '../../screen/TabNavigation';
+
 const ACCESS_TOKEN = 'access_token';
 
-export default class SignIn extends Component {
+class SignIn extends Component {
 
     constructor() {
         super()
@@ -22,6 +25,8 @@ export default class SignIn extends Component {
             Username: '',
             Password: '',
             error: '',
+            timePassed: false,
+            Hidebtn: true,
         }
     }
 
@@ -44,6 +49,7 @@ export default class SignIn extends Component {
     }
 
     async onLoginPressed() {
+
         this.setState({ showProgress: true })
         try {
             let response = await fetch('http://192.168.1.99:3000/login/member', {
@@ -57,8 +63,20 @@ export default class SignIn extends Component {
                     Password: this.state.Password,
                 })
             });
+
             let res = await response.text();
-            if (response.message == 'Successful') {
+            if (this.state.Username == "" && this.state.Password == "") {
+                Alert.alert('Please fill Username and Password!')
+                return 0
+            } if (this.state.Username == "" && this.state.Password != "") {
+                Alert.alert('Please fill Password!')
+                return 0
+            } if (this.state.Password == "" && this.state.Username != "") {
+                Alert.alert('Please fill Password!')
+                return 0
+            }
+
+            if (response.status == 200) {
                 //Handle success
                 let accessToken = res;
                 console.log(accessToken);
@@ -70,6 +88,7 @@ export default class SignIn extends Component {
                 let error = res;
                 throw error;
             }
+
         } catch (error) {
             this.setState({ error: error });
             console.log("error " + error);
@@ -78,6 +97,7 @@ export default class SignIn extends Component {
     }
 
     render() {
+
         return (
             <View style={styles.allPage}>
                 <View style={styles.TopView}>
@@ -102,6 +122,7 @@ export default class SignIn extends Component {
                         onChangeText={(text) => this.setState({ Password: text })}
                     />
 
+
                     <TouchableOpacity
                         onPress={this.onLoginPressed.bind(this)}
                     >
@@ -111,6 +132,7 @@ export default class SignIn extends Component {
                             </View>
                         </View>
                     </TouchableOpacity>
+
 
                     <Text>
                         {this.state.error}
@@ -123,4 +145,31 @@ export default class SignIn extends Component {
 
 }
 
-AppRegistry.registerComponent('SignIn', () => SignIn);
+const RootStack = createStackNavigator({
+    SignIn: {
+        screen: SignIn,
+        navigationOptions: {
+            header: null
+        }
+    },
+    AllScreen: {
+        screen: AllScreen,
+        navigationOptions: {
+            header: null
+        }
+    },
+},
+    {
+        initialRouteName: 'SignIn',
+    })
+
+
+const AppContainer = createAppContainer(RootStack);
+
+export default class App extends React.Component {
+    render() {
+        return <AppContainer />;
+    }
+}
+
+//AppRegistry.registerComponent('SignIn', () => SignIn);
