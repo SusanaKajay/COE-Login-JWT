@@ -38,7 +38,7 @@ export default class EditPassword extends Component {
                 Alert.alert('Both passwords are not matching')
             }
 
-            let response = await fetch('http://192.168.1.99:3000/MemberChangePassword', {
+            let response = await fetch('http://192.168.43.159:3000/MemberChangePassword', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -61,8 +61,6 @@ export default class EditPassword extends Component {
 
     }
 
-    async
-
     render() {
         return (
             <View style={styles.allPage}>
@@ -70,7 +68,7 @@ export default class EditPassword extends Component {
                     style={styles.inputBox}
                     placeholder='New password'
                     keyboardType='default'
-                    minLength={8}
+                    minLength={5}
                     onChangeText={(text) => this.setState({ checkPass1: text })}
                     secureTextEntry={true}
                 />
@@ -78,12 +76,12 @@ export default class EditPassword extends Component {
                     style={styles.inputBox}
                     placeholder='Confirm password'
                     keyboardType='default'
-                    minLength={8}
+                    minLength={5}
                     onChangeText={(text) => this.setState({ checkPass2: text })}
                     secureTextEntry={true}
                 />
 
-                <Text>Password must have at least 8 characters</Text>
+                <Text>Password must have at least 5 characters</Text>
 
                 <TouchableOpacity
                     style={styles.btn}

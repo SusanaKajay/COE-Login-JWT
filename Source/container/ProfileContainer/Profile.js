@@ -19,6 +19,7 @@ import JoinEventHistory from '../HistoryContainer/JoinEventHistory';
 import RedeemHistory from '../HistoryContainer/RedeemHistory';
 import EdtiPassword from '../EditPasswordContainer/EditPassword';
 import EditPrifileImage from '../EditProfileImageContainer/EditProfileImage';
+import userState from '../../store/UserState';
 
 class Profile extends Component {
 
@@ -38,12 +39,13 @@ class Profile extends Component {
 
     componentDidMount() {
         this.RemoteRequest();
+        // alert('userState is '+ userState.getid)
     }
 
     RemoteRequest = () => {
 
         const getVariableFromLogin = '58113242'
-
+        //const getVariableFromLogin = userState.getid
         fetch(memberAPI.url)
             .then((Response) => Response.json())
             .then((ResponseJson) => {

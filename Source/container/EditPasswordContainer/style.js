@@ -10,16 +10,14 @@ export default StyleSheet.create({
         backgroundColor: 'white',
         justifyContent: 'center',
         alignItems: 'center',
-        width: width,
-        height: height/2,
+        flex: 1,
+
     },
     inputBox:{
-        height: width/10,
+        height: width/5,
         width: width/1.2,
-        borderWidth: 2,
+        borderBottomWidth: 2,
         borderColor: '#e80083',
-        fontSize: 20,
-        marginBottom: 10,
     },
     btn:{
         marginTop: 10,

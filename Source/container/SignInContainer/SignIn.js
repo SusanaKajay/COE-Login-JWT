@@ -12,6 +12,7 @@ import { createStackNavigator, createAppContainer } from 'react-navigation';
 import styles from './style';
 
 import AllScreen from '../../screen/TabNavigation';
+import userState from '../../store/UserState';
 
 const ACCESS_TOKEN = 'access_token';
 
@@ -50,7 +51,7 @@ class SignIn extends Component {
 
         this.setState({ showProgress: true })
         try {
-            let response = await fetch('http://localhost:3000/login/member', {
+            let response = await fetch('http://192.168.43.159:3000/login/member', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -70,6 +71,7 @@ class SignIn extends Component {
                 //Alert.alert(accessToken)
                 //On success we will store the access_token in the AsyncStorage
                 this.storeToken(accessToken);
+                userState.setid(this.state.Username)
                 this.props.navigation.navigate('AllScreen');
             } else if(response.status == 401) {
                 //Handle error
