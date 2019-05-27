@@ -9,8 +9,6 @@ import {
     Alert,
 } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
-import { coin, box, calendar } from '../../../img/imgIndext';
-import { JoinHisAPI } from '../../themes/variables';
 import styles from './style';
 
 import AllScreen from '../../screen/TabNavigation';

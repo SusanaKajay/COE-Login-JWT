@@ -17,6 +17,8 @@ const { height, width } = Dimensions.get('window');
 import BehavHistory from '../HistoryContainer/BehaviorHistory';
 import JoinEventHistory from '../HistoryContainer/JoinEventHistory';
 import RedeemHistory from '../HistoryContainer/RedeemHistory';
+import EdtiPassword from '../EditPasswordContainer/EditPassword';
+import EditPrifileImage from '../EditProfileImageContainer/EditProfileImage';
 
 class Profile extends Component {
 
@@ -88,13 +90,17 @@ class Profile extends Component {
                     </View>
                 </TouchableOpacity>
 
-                <TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate('EditPrifileImage', { id: this.state.MemberSource[0].Member_ID })}
+                >
                     <View style={styles.btn}>
-                        <Text style={styles.btnText}>Edit Profile</Text>
+                        <Text style={styles.btnText}>Chang Profile Image</Text>
                     </View>
                 </TouchableOpacity>
 
-                <TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate('EdtiPassword', { id: this.state.MemberSource[0].Member_ID })}
+                >
                     <View style={styles.btn}>
                         <Text style={styles.btnText}>Reset Password</Text>
                     </View>
@@ -222,6 +228,26 @@ const RootStack = createStackNavigator(
             screen: RedeemHistory,
             navigationOptions: {
                 title: 'Redeem History',
+                headerTintColor: 'white',
+                headerStyle: {
+                    backgroundColor: '#e80083'
+                }
+            }
+        },
+        EdtiPassword: {
+            screen: EdtiPassword,
+            navigationOptions: {
+                title: 'Change Password',
+                headerTintColor: 'white',
+                headerStyle: {
+                    backgroundColor: '#e80083'
+                }
+            }
+        },
+        EditPrifileImage: {
+            screen: EditPrifileImage,
+            navigationOptions: {
+                title: 'Chang Profile Image',
                 headerTintColor: 'white',
                 headerStyle: {
                     backgroundColor: '#e80083'
