@@ -8,14 +8,30 @@ const { height, width } = Dimensions.get('window');
 export default StyleSheet.create({
     allPage:{
         backgroundColor: 'white',
-        alignItems: 'center',
-        justifyContent: 'center',
+        flexGrow : 1, 
     },
     btn:{
         borderColor: 'gray',
         borderBottomWidth: 2,
         height: width/10,
-        width: width/1.05,
+        width: width,
+        marginBottom: 5,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        flex: 1,
+    },
+    subBtn:{
+        flex: 0.5,
+    },
+    subBtn1:{
+        flex: 0.5,
+        flexDirection: 'row-reverse',
+    },
+    btn2:{
+        borderColor: 'gray',
+        borderBottomWidth: 2,
+        height: width/10,
+        width: width,
         marginBottom: 5,
         flexDirection: 'column',
         justifyContent: 'center',
@@ -23,7 +39,9 @@ export default StyleSheet.create({
     btnText: {
         color: 'gray',
         fontSize: 18,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        marginLeft: 10,
+        marginRight: 10,
     },
     subMemberCard:{
         margin: 10,

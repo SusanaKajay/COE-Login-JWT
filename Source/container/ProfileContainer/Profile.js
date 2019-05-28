@@ -7,10 +7,11 @@ import {
     Image,
     Dimensions,
     TouchableOpacity,
+    ScrollView,
 } from 'react-native';
 import styles from './Style';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
-import { memberAPI, HomeColor } from '../../themes/variables';
+import { memberAPI, HomeColor, JoinHisAPI, BehavHisAPI, RedeemHisAPI, } from '../../themes/variables';
 import { point, coin } from '../../../img/imgIndext'
 const { height, width } = Dimensions.get('window');
 
@@ -31,8 +32,9 @@ class Profile extends Component {
         super()
         this.state = {
             MemberSource: [],
-            JoinHistory: [],
-            BehavHistory: [],
+            JoinHis: [],
+            BehavHis: [],
+            RedeemHis: [],
             loading: false,
         }
     }
@@ -58,11 +60,54 @@ class Profile extends Component {
             .catch(error => {
                 this.setState({ error, loading: false, refreshing: false })
             });
+
+        fetch(JoinHisAPI.url)
+            .then((Response) => Response.json())
+            .then((ResponseJson) => {
+                this.setState({
+                    error: ResponseJson.error || null,
+                    loading: false,
+                    JoinHis: ResponseJson.filter(index => index.Member_ID === getVariableFromLogin),
+                });
+            })
+            .catch(error => {
+                this.setState({ error, loading: false, refreshing: false })
+            });
+
+        fetch(BehavHisAPI.url)
+            .then((Response) => Response.json())
+            .then((ResponseJson) => {
+                this.setState({
+                    error: ResponseJson.error || null,
+                    loading: false,
+                    BehavHis: ResponseJson.filter(index => index.Member_ID === getVariableFromLogin),
+                });
+            })
+            .catch(error => {
+                this.setState({ error, loading: false, refreshing: false })
+            });
+
+        fetch(RedeemHisAPI.url)
+            .then((Response) => Response.json())
+            .then((ResponseJson) => {
+                this.setState({
+                    error: ResponseJson.error || null,
+                    loading: false,
+                    RedeemHis: ResponseJson.filter(index => index.Member_ID.toString() === getVariableFromLogin),
+                });
+            })
+            .catch(error => {
+                this.setState({ error, loading: false, refreshing: false })
+            });
+
     }
 
     render() {
+        let JoinHisLength = this.state.JoinHis.length
+        let BehavHisLength = this.state.BehavHis.length
+        let RedeemHisLength = this.state.RedeemHis.length
         return (
-            <View style={styles.allPage}>
+            <ScrollView style={styles.allPage}>
                 <FlatList
                     data={this.state.MemberSource}
                     renderItem={this.renderMemberCard}
@@ -72,7 +117,12 @@ class Profile extends Component {
                     onPress={() => this.props.navigation.navigate('JoinEventHistory', { id: this.state.MemberSource[0].Member_ID })}
                 >
                     <View style={styles.btn}>
-                        <Text style={styles.btnText}>Join Event History</Text>
+                        <View style={styles.subBtn}>
+                            <Text style={styles.btnText}>Join Event History</Text>
+                        </View>
+                        <View style={styles.subBtn1}>
+                            <Text style={styles.btnText}>{JoinHisLength}</Text>
+                        </View>
                     </View>
                 </TouchableOpacity>
 
@@ -80,7 +130,12 @@ class Profile extends Component {
                     onPress={() => this.props.navigation.navigate('BehavHistory', { id: this.state.MemberSource[0].Member_ID })}
                 >
                     <View style={styles.btn}>
-                        <Text style={styles.btnText}>Behavior History</Text>
+                        <View style={styles.subBtn}>
+                            <Text style={styles.btnText}>Behavior History</Text>
+                        </View>
+                        <View style={styles.subBtn1}>
+                            <Text style={styles.btnText}>{BehavHisLength}</Text>
+                        </View>
                     </View>
                 </TouchableOpacity>
 
@@ -88,33 +143,46 @@ class Profile extends Component {
                     onPress={() => this.props.navigation.navigate('RedeemHistory', { id: this.state.MemberSource[0].Member_ID })}
                 >
                     <View style={styles.btn}>
-                        <Text style={styles.btnText}>Redeem History</Text>
+                        <View style={styles.subBtn}>
+                            <Text style={styles.btnText}>Redeem History</Text>
+                        </View>
+                        <View style={styles.subBtn1}>
+                            <Text style={styles.btnText}>{RedeemHisLength}</Text>
+                        </View>
                     </View>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     onPress={() => this.props.navigation.navigate('EditPrifileImage', { id: this.state.MemberSource[0].Member_ID })}
                 >
-                    <View style={styles.btn}>
-                        <Text style={styles.btnText}>Chang Profile Image</Text>
+                    <View style={styles.btn2}>
+                        <Text style={styles.btnText}>Change Profile Image</Text>
+                    </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    //onPress={() => this.props.navigation.navigate('', { id: this.state.MemberSource[0].Member_ID })}
+                >
+                    <View style={styles.btn2}>
+                        <Text style={styles.btnText}>Change Phone Number</Text>
                     </View>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     onPress={() => this.props.navigation.navigate('EdtiPassword', { id: this.state.MemberSource[0].Member_ID })}
                 >
-                    <View style={styles.btn}>
+                    <View style={styles.btn2}>
                         <Text style={styles.btnText}>Reset Password</Text>
                     </View>
                 </TouchableOpacity>
 
                 <TouchableOpacity>
-                    <View style={styles.btn}>
+                    <View style={styles.btn2}>
                         <Text style={styles.btnText}>Sign Out</Text>
                     </View>
                 </TouchableOpacity>
 
-            </View>
+            </ScrollView>
         )
     }
 
@@ -132,10 +200,11 @@ class Profile extends Component {
         }
 
         return (
+
             <View style={styles.allPage}>
                 <View style={{
                     backgroundColor: homeCol,
-                    width: width / 1.05,
+                    width: width,
                     marginTop: 10,
                     marginBottom: 10,
                     borderRadius: 20,
@@ -249,7 +318,7 @@ const RootStack = createStackNavigator(
         EditPrifileImage: {
             screen: EditPrifileImage,
             navigationOptions: {
-                title: 'Chang Profile Image',
+                title: 'Change Profile Image',
                 headerTintColor: 'white',
                 headerStyle: {
                     backgroundColor: '#e80083'

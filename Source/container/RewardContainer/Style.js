@@ -89,5 +89,9 @@ export default StyleSheet.create({
         fontSize: 25,
         fontWeight: 'normal',
         color: 'white'
+    },
+    picker:{
+        width: width,
+        height: width/10,
     }
 });

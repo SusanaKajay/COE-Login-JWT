@@ -13,7 +13,7 @@ import { coin, box } from '../../../img/imgIndext';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { rewardAPI, memberAPI } from '../../themes/variables'
 
-const getDataFromLogin = "58113242";
+
 
 class Reward extends Component {
 
@@ -21,7 +21,6 @@ class Reward extends Component {
     super()
     this.state = {
       RewardSource: [],
-      RewardSelect: '',
       MemberSource: [],
       sortDataBy: 'latest',
       loading: false,
@@ -29,6 +28,7 @@ class Reward extends Component {
       error: null,
       page: 1,
       seed: 1,
+      Select: "latest",
     }
   }
 
@@ -37,14 +37,15 @@ class Reward extends Component {
   }
 
   RemoteRequest = () => {
-
+    const getVariableFromLogin = '58113242'
+    //const getVariableFromLogin = userState.getid
     fetch(rewardAPI.url)
       .then((Response) => Response.json())
       .then((ResponseJson) => {
         this.setState({
           error: ResponseJson.error || null,
           loading: false,
-          RewardSource: ResponseJson.sort((a, b) => a.Reward_Point - b.Reward_Point) && ResponseJson.filter(index => index.Reward_Quantity != 0),
+          RewardSource: ResponseJson.filter(index => index.Reward_Quantity != 0),
         });
       })
       .catch(error => {
@@ -57,7 +58,7 @@ class Reward extends Component {
         this.setState({
           error: ResponseJson.error || null,
           loading: false,
-          MemberSource: ResponseJson.filter(index => index.Member_ID === "58113242"),
+          MemberSource: ResponseJson.filter(index => index.Member_ID === getVariableFromLogin),
         });
       })
       .catch(error => {
@@ -82,43 +83,69 @@ class Reward extends Component {
         />
 
         <Picker
-          selectedValue={this.state.language}
-          style={{ height: 50, width: 100 }}
+          selectedValue={this.state.Select}
+          style={styles.picker}
           onValueChange={(itemValue, itemIndex) => {
             if (itemValue == "latest") {
               this.setState({
-                RewardSelect: itemValue
+                Select: "latest",
+                RewardSource: this.state.RewardSource.reverse()
               })
-            } else if (itemValue == "js") {
+            } else if (itemValue == "low2hight") {
               this.setState({
-                RewardSelect: itemValue
+                Select: "low2hight",
+                RewardSource: this.state.RewardSource.sort((a, b) => a.Reward_Point - b.Reward_Point)
+              })
+            } else if (itemValue == "hight2low") {
+              this.setState({
+                Select: "hight2low",
+                RewardSource: this.state.RewardSource.sort((a, b) => b.Reward_Point - a.Reward_Point)
               })
             }
-          }
-          }>
-          <Picker.Item label="latest" value="latest" />
-          <Picker.Item label="JavaScript" value="js" />
+          }}>
+          <Picker.Item label="Latest" value="latest" />
+          <Picker.Item label="Price Low to Hight" value="low2hight" />
+          <Picker.Item label="Price Hight to Low" value="hight2low" />
         </Picker>
 
         {
-          this.state.RewardSelect ?
-            this.state.RewardSource ?
-              <Text>{this.state.RewardSelect}</Text>
-              : null
-            : null
+          this.state.Select == "latest" &&
+          < FlatList
+            data={this.state.RewardSource}
+            renderItem={this.renderItem}
+            numColumns={2}
+            keyExtractor={(item, index) => item.id}
+            refreshing={this.state.refreshing}
+            onRefresh={this.handleRefresh}
+            ListFooterComponent={this.renderFooter}
+          />
         }
 
+        {
+          this.state.Select == "low2hight" &&
+          < FlatList
+            data={this.state.RewardSource}
+            renderItem={this.renderItem}
+            numColumns={2}
+            keyExtractor={(item, index) => item.id}
+            refreshing={this.state.refreshing}
+            onRefresh={this.handleRefresh}
+            ListFooterComponent={this.renderFooter}
+          />
+        }
 
-        <FlatList
-          data={this.state.RewardSource}
-          renderItem={this.renderItem}
-          numColumns={2}
-          keyExtractor={(item, index) => item.id}
-          refreshing={this.state.refreshing}
-          onRefresh={this.handleRefresh}
-          ListFooterComponent={this.renderFooter}
-        />
-
+{
+          this.state.Select == "hight2low" &&
+          < FlatList
+            data={this.state.RewardSource}
+            renderItem={this.renderItem}
+            numColumns={2}
+            keyExtractor={(item, index) => item.id}
+            refreshing={this.state.refreshing}
+            onRefresh={this.handleRefresh}
+            ListFooterComponent={this.renderFooter}
+          />
+        }
       </ScrollView>
     );
   }
