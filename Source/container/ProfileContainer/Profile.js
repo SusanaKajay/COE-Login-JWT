@@ -20,7 +20,8 @@ import JoinEventHistory from '../HistoryContainer/JoinEventHistory';
 import RedeemHistory from '../HistoryContainer/RedeemHistory';
 import EdtiPassword from '../EditPasswordContainer/EditPassword';
 import EditPrifileImage from '../EditProfileImageContainer/EditProfileImage';
-import EditPhoneNumber from '../EditPhoneNumberContainer/EditPhoneNumber'
+import EditPhoneNumber from '../EditPhoneNumberContainer/EditPhoneNumber';
+import SignIn from '../SignInContainer/SignIn2';
 
 import userState from '../../store/UserState';
 
@@ -184,7 +185,7 @@ class Profile extends Component {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    onPress={this.onLogout.bind(this)}
+                    onPress={() => this.props.navigation.navigate('SignIn')}
                 >
                     <View style={styles.btn2}>
                         <Text style={styles.btnText}>Sign Out</Text>
@@ -344,6 +345,12 @@ const RootStack = createStackNavigator(
                 }
             }
         },
+        SignIn:{
+            screen: SignIn,
+            navigationOptions: {
+                header: null
+            }
+        }
     },
     {
         initialRouteName: 'Profile',

@@ -37,8 +37,8 @@ class Reward extends Component {
   }
 
   RemoteRequest = () => {
-    const getVariableFromLogin = '58113242'
-    //const getVariableFromLogin = userState.getid
+    //const getVariableFromLogin = '58113242'
+    const getVariableFromLogin = userState.getid
     fetch(rewardAPI.url)
       .then((Response) => Response.json())
       .then((ResponseJson) => {
