@@ -2,13 +2,22 @@ import {observable, action, computed, decorate,} from 'mobx';
 
 class UserState {
     Member_ID = '';
+    Token = '';
 
     get getid(){
         return this.Member_ID
     }
 
+    get getTokenFromLogin(){
+        return this.Token
+    }
+
     setid(id) {
         this.Member_ID = id
+    }
+
+    setTokenFromLogin(token) {
+        this.Member_ID = token
     }
 }
 

@@ -41,7 +41,11 @@ class SignIn extends Component {
     async getToken (){
         try{
             let token = await AsyncStorage.setItem(ACCESS_TOKEN);
-            Alert.alert('token:' + token )
+            if(!accessToken){
+                Alert.alert('Token not set')
+            }else{
+                this.props.navigation.navigate('AllScreen');
+            }
         }catch (error){
             Alert.alert('something went wrong')
         }
@@ -80,6 +84,7 @@ class SignIn extends Component {
                 //Alert.alert(accessToken)
                 //On success we will store the access_token in the AsyncStorage
                 this.storeToken(accessToken);
+                userState.setTokenFromLogin(accessToken)
                 userState.setid(this.state.Username);
                 this.props.navigation.navigate('AllScreen');
             } else if(response.status == 401) {
@@ -112,6 +117,10 @@ class SignIn extends Component {
             console.log("error " + error);
             this.setState({ showProgress: false });
         }
+    }
+
+    componentDidMount(){
+        this.getToken()
     }
 
     render() {

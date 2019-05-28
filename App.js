@@ -6,6 +6,7 @@
  * @flow
  */
 
+ /*
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
 
@@ -20,3 +21,37 @@ export default class App extends Component {
     );
   }
 };
+*/
+
+import React, {Component} from 'react';
+
+import {createStackNavigator, createAppContainer} from 'react-navigation'; 
+import SignInScreen from './Source/container/SignInContainer/SignIn';
+import HomeScreen from './Source/screen/TabNavigation';
+
+const RootStack = createStackNavigator({
+  SignIn: {
+    screen: SignInScreen,
+    navigationOptions: {
+      header : null
+    }
+  },
+  Home: {
+    screen: HomeScreen,
+    navigationOptions: {
+      header : null
+    }
+  }
+},{
+  initialRouteName: 'SignIn'
+})
+
+const AppContainer = createAppContainer(RootStack);
+
+export default class App extends Component {
+    render() {
+        return( 
+        <AppContainer/>
+        )
+    }
+}
