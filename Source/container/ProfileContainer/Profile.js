@@ -20,6 +20,8 @@ import JoinEventHistory from '../HistoryContainer/JoinEventHistory';
 import RedeemHistory from '../HistoryContainer/RedeemHistory';
 import EdtiPassword from '../EditPasswordContainer/EditPassword';
 import EditPrifileImage from '../EditProfileImageContainer/EditProfileImage';
+import EditPhoneNumber from '../EditPhoneNumberContainer/EditPhoneNumber'
+
 import userState from '../../store/UserState';
 
 class Profile extends Component {
@@ -102,6 +104,11 @@ class Profile extends Component {
 
     }
 
+    onLogout(){
+        this.setState({showProgress: true})
+        this.deleteToken();
+    }
+
     render() {
         let JoinHisLength = this.state.JoinHis.length
         let BehavHisLength = this.state.BehavHis.length
@@ -161,7 +168,7 @@ class Profile extends Component {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    //onPress={() => this.props.navigation.navigate('', { id: this.state.MemberSource[0].Member_ID })}
+                    onPress={() => this.props.navigation.navigate('EditPhoneNumber', { id: this.state.MemberSource[0].Member_ID })}
                 >
                     <View style={styles.btn2}>
                         <Text style={styles.btnText}>Change Phone Number</Text>
@@ -176,7 +183,9 @@ class Profile extends Component {
                     </View>
                 </TouchableOpacity>
 
-                <TouchableOpacity>
+                <TouchableOpacity
+                    onPress={this.onLogout.bind(this)}
+                >
                     <View style={styles.btn2}>
                         <Text style={styles.btnText}>Sign Out</Text>
                     </View>
@@ -324,7 +333,17 @@ const RootStack = createStackNavigator(
                     backgroundColor: '#e80083'
                 }
             }
-        }
+        },
+        EditPhoneNumber: {
+            screen: EditPhoneNumber,
+            navigationOptions: {
+                title: 'Change Phone Number',
+                headerTintColor: 'white',
+                headerStyle: {
+                    backgroundColor: '#e80083'
+                }
+            }
+        },
     },
     {
         initialRouteName: 'Profile',

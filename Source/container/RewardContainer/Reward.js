@@ -12,7 +12,7 @@ import styles from './Style';
 import { coin, box } from '../../../img/imgIndext';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { rewardAPI, memberAPI } from '../../themes/variables'
-
+import userState from '../../store/UserState';
 
 
 class Reward extends Component {
