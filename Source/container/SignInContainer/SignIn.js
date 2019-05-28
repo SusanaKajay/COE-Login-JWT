@@ -16,6 +16,7 @@ import styles from './style';
 import AllScreen from '../../screen/TabNavigation';
 
 const ACCESS_TOKEN = 'access_token';
+import userState from '../../store/UserState';
 
 class SignIn extends Component {
 
@@ -25,27 +26,34 @@ class SignIn extends Component {
             Username: '',
             Password: '',
             error: '',
-            // timePassed: false,
-            // Hidebtn: true,
         }
     }
 
-    redirect(routeName, accessToken) {
-        this.props.navigator.push({
-            name: routeName
-        });
+    async storeToken (accessToken){
+        try{
+            await AsyncStorage.setItem(ACCESS_TOKEN, accessToken);
+            this.getToken();
+        }catch (error){
+            Alert.alert('something went wrong')
+        }
     }
 
-    storeToken(responseData) {
-        AsyncStorage.setItem(ACCESS_TOKEN, responseData, (err) => {
-            if (err) {
-                console.log("an error");
-                throw err;
-            }
-            console.log("success");
-        }).catch((err) => {
-            console.log("error is: " + err);
-        });
+    async getToken (){
+        try{
+            let token = await AsyncStorage.setItem(ACCESS_TOKEN);
+            Alert.alert('token:' + token )
+        }catch (error){
+            Alert.alert('something went wrong')
+        }
+    }
+
+    async removeToken (){
+        try{
+            await AsyncStorage.removeItem(ACCESS_TOKEN);
+            this.getToken();
+        }catch (error){
+            Alert.alert('something went wrong')
+        }
     }
 
     async onLoginPressed() {
@@ -63,15 +71,16 @@ class SignIn extends Component {
                     Password: this.state.Password,
                 })
             });
-            let res = await response.text();
+            let res = await response.json();
             if (response.status == 200) {
                 //Handle success
                 //Alert.alert('llllllllllll');
-                let accessToken = res
+                let accessToken = res.token
                 //Alert.alert(response.token);
                 //Alert.alert(accessToken)
                 //On success we will store the access_token in the AsyncStorage
                 this.storeToken(accessToken);
+                userState.setid(this.state.Username)
                 this.props.navigation.navigate('AllScreen');
             } else if(response.status == 401) {
                 //Handle error
@@ -98,6 +107,7 @@ class SignIn extends Component {
                 Alert.alert('Wrong Password!')
             }
         } catch (error) {
+            this.removeToken();
             this.setState({ error: error });
             console.log("error " + error);
             this.setState({ showProgress: false });
