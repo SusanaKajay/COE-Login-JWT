@@ -46,7 +46,9 @@ class Profile extends Component {
 
     async deleteToken(){
         try{
-            await AsyncStorage.removeItem(ACCESS_TOKEN)
+            await AsyncStorage.removeItem(ACCESS_TOKEN);
+            userState.setTokenFromLogin("");
+            Alert.alert('Delete Token')
         }catch(error){
             Alert.alert("Somethig went Wrong")
         }

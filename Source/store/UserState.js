@@ -17,7 +17,7 @@ class UserState {
     }
 
     setTokenFromLogin(token) {
-        this.Member_ID = token
+        this.Token = token
     }
 }
 

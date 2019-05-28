@@ -44,7 +44,8 @@ class SignIn extends Component {
             if(!accessToken){
                 //Alert.alert('Token not set')
             }else{
-                this.props.navigation.navigate('AllScreen');       
+                this.props.navigation.navigate('AllScreen');
+                userState.setTokenFromLogin(token)       
             }
         }catch (error){
             //Alert.alert('something went wrong')
