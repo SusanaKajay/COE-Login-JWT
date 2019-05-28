@@ -80,7 +80,7 @@ class SignIn extends Component {
                 //Alert.alert(accessToken)
                 //On success we will store the access_token in the AsyncStorage
                 this.storeToken(accessToken);
-                userState.setid(this.state.Username)
+                userState.setid(this.state.Username);
                 this.props.navigation.navigate('AllScreen');
             } else if(response.status == 401) {
                 //Handle error
