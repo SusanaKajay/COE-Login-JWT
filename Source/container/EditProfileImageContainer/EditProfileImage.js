@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import styles from './style';
+import {ChangeProfile} from '../../themes/variables'
 
 export default class EditPrifileImage extends Component {
 
@@ -47,7 +48,7 @@ export default class EditPrifileImage extends Component {
 
   async OnUplode() {
     try {
-      let response = await fetch('http://192.168.43.159:3000/MemberChangeProfile', {
+      let response = await fetch(ChangeProfile.url, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',

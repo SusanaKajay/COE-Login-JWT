@@ -9,10 +9,8 @@ import {
     Alert,
 } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
-import { coin, box, calendar } from '../../../img/imgIndext';
-import { JoinHisAPI } from '../../themes/variables';
 import styles from './style';
-
+import {Member_Login} from '../../themes/variables'
 import AllScreen from '../../screen/TabNavigation';
 
 const ACCESS_TOKEN = 'access_token';
@@ -65,7 +63,7 @@ class SignIn extends Component {
 
         this.setState({ showProgress: true })
         try {
-            let response = await fetch('http://localhost:3000/login/member', {
+            let response = await fetch( Member_Login.url , {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

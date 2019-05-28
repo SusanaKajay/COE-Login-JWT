@@ -8,6 +8,7 @@ import {
     Alert,
 } from 'react-native'
 import styles from './style';
+import {ChangePassword} from '../../themes/variables'
 
 
 export default class EditPassword extends Component {
@@ -38,7 +39,7 @@ export default class EditPassword extends Component {
                 Alert.alert('Both passwords are not matching')
             }
 
-            let response = await fetch('http://192.168.43.159:3000/MemberChangePassword', {
+            let response = await fetch(ChangePassword.url, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

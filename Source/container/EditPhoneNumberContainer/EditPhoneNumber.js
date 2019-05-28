@@ -8,6 +8,7 @@ import {
     Alert,
 } from 'react-native'
 import styles from './style';
+import {Changetel} from '../../themes/variables'
 
 export default class EditPhoneNumber extends Component {
     constructor(props) {
@@ -28,7 +29,7 @@ export default class EditPhoneNumber extends Component {
                     Member_ID: id
                 })
             }
-            let response = await fetch('http://192.168.43.159:3000/MemberChangetel', {
+            let response = await fetch(Changetel.url, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
