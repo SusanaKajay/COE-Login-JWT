@@ -34,20 +34,20 @@ class SignIn extends Component {
             await AsyncStorage.setItem(ACCESS_TOKEN, accessToken);
             this.getToken();
         }catch (error){
-            Alert.alert('something went wrong')
+            //Alert.alert('something went wrong')
         }
     }
 
     async getToken (){
         try{
-            let token = await AsyncStorage.setItem(ACCESS_TOKEN);
+            let token = await AsyncStorage.getItem(ACCESS_TOKEN);
             if(!accessToken){
-                Alert.alert('Token not set')
+                //Alert.alert('Token not set')
             }else{
-                this.props.navigation.navigate('AllScreen');
+                this.props.navigation.navigate('AllScreen');       
             }
         }catch (error){
-            Alert.alert('something went wrong')
+            //Alert.alert('something went wrong')
         }
     }
 
@@ -56,7 +56,7 @@ class SignIn extends Component {
             await AsyncStorage.removeItem(ACCESS_TOKEN);
             this.getToken();
         }catch (error){
-            Alert.alert('something went wrong')
+            //Alert.alert('something went wrong')
         }
     }
 

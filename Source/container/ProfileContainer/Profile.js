@@ -8,6 +8,8 @@ import {
     Dimensions,
     TouchableOpacity,
     ScrollView,
+    Alert,
+    AsyncStorage,
 } from 'react-native';
 import styles from './Style';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
@@ -24,7 +26,7 @@ import EditPhoneNumber from '../EditPhoneNumberContainer/EditPhoneNumber';
 //import SignIn from '../SignInContainer/SignIn2';
 
 import userState from '../../store/UserState';
-
+const ACCESS_TOKEN = userState.getTokenFromLogin
 class Profile extends Component {
 
     static navigationOption = {
@@ -42,6 +44,14 @@ class Profile extends Component {
         }
     }
 
+    async deleteToken(){
+        try{
+            await AsyncStorage.removeItem(ACCESS_TOKEN)
+        }catch(error){
+            Alert.alert("Somethig went Wrong")
+        }
+    }
+
     componentDidMount() {
         this.RemoteRequest();
         // alert('userState is '+ userState.getid)
@@ -49,8 +59,8 @@ class Profile extends Component {
 
     RemoteRequest = () => {
 
-        const getVariableFromLogin = '58113242'
-        //const getVariableFromLogin = userState.getid
+        //const getVariableFromLogin = '58113242'
+        const getVariableFromLogin = userState.getid
         fetch(memberAPI.url)
             .then((Response) => Response.json())
             .then((ResponseJson) => {
@@ -185,7 +195,7 @@ class Profile extends Component {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    //onPress={() => this.props.navigation.navigate('SignIn')}
+                    onPress={this.onLogout.bind(this)}
                 >
                     <View style={styles.btn2}>
                         <Text style={styles.btnText}>Sign Out</Text>
