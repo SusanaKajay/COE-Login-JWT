@@ -1,4 +1,4 @@
-export const EventAPI = { url : 'http://localhost.159:3000/send_OpenEvent' };
+export const EventAPI = { url : 'http://localhost:3000/send_OpenEvent' };
 export const rewardAPI = { url : 'http://localhost:3000/send_Reward' };
 export const memberAPI = { url : 'http://localhost:3000/send_Member' };
 export const HomeColor = {
