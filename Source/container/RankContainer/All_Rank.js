@@ -142,7 +142,7 @@ class All_Rank extends Component {
         ).slice(5, 10)
 
 
-        let ElonScore = this.state.HouseSource.filter(index => index.House_name === "Elon Mask").reduce((total, point) => total + point.House_MemberPoint, 0);
+        let ElonScore = this.state.HouseSource.filter(index => index.House_name === "Elon Musk").reduce((total, point) => total + point.House_MemberPoint, 0);
         let LarryScore = this.state.HouseSource.filter(index => index.House_name === "Larry Page").reduce((total, point) => total + point.House_MemberPoint, 0);
         let MarkScore = this.state.HouseSource.filter(index => index.House_name === "Mark Zuckerberg").reduce((total, point) => total + point.House_MemberPoint, 0);
         let BillScore = this.state.HouseSource.filter(index => index.House_name === "Bill Gates").reduce((total, point) => total + point.House_MemberPoint, 0);

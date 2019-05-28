@@ -213,7 +213,7 @@ class Profile extends Component {
         var homeCol = '';
         if (item.Member_House == "Bill Gates") {
             homeCol = HomeColor.Bill;
-        } else if (item.Member_House == "Elon Mask") {
+        } else if (item.Member_House == "Elon Musk") {
             homeCol = HomeColor.Elon;
         } else if (item.Member_House == "Larry Page") {
             homeCol = HomeColor.Larry;

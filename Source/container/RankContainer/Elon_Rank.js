@@ -40,7 +40,7 @@ export default class Elon_Rank extends Component {
                 this.setState({
                     error: ResponseJson.error || null,
                     loading: false,
-                    ElonMemberSource: ResponseJson.sort((a, b) => b.Member_Total - a.Member_Total) && ResponseJson.filter(index => index.Member_House === "Elon Mask" && index.Member_Status === "Active"),
+                    ElonMemberSource: ResponseJson.sort((a, b) => b.Member_Total - a.Member_Total) && ResponseJson.filter(index => index.Member_House === "Elon Musk" && index.Member_Status === "Active"),
                 });
             })
             .catch(error => {

@@ -93,5 +93,6 @@ export default StyleSheet.create({
     picker:{
         width: width,
         height: width/10,
+        marginBottom:(Platform.OS === 'ios') ? 150 : 50,
     }
 });

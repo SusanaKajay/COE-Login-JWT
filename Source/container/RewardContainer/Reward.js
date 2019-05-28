@@ -81,7 +81,11 @@ class Reward extends Component {
           onRefresh={this.handleRefresh}
           ListFooterComponent={this.renderFooter}
         />
-
+        <View>
+          <View>
+            
+          </View>
+        </View>
         <Picker
           selectedValue={this.state.Select}
           style={styles.picker}
@@ -134,7 +138,7 @@ class Reward extends Component {
           />
         }
 
-{
+        {
           this.state.Select == "hight2low" &&
           < FlatList
             data={this.state.RewardSource}
@@ -164,6 +168,7 @@ class Reward extends Component {
       </View>
     )
   }
+  
   renderItem = ({ item }) => {
     return (
       <View style={styles.ListBox}>
