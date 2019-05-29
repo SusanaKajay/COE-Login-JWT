@@ -23,7 +23,7 @@ export default StyleSheet.create({
         marginBottom: 20,
     },
     TopFont:{
-        fontSize: 50,
+        fontSize: 20,
         fontWeight: 'bold',
         color: 'white'
     },
@@ -33,7 +33,7 @@ export default StyleSheet.create({
         alignItems: 'center',
     },
     inputBox:{
-        fontSize: 20,
+        
         width: width/1.2,
         height: width/8,
         borderColor: '#e80083',

@@ -94,7 +94,7 @@ class SignIn extends Component {
             }else if(response.status == 402) {
                 //Handle error
                 let error = res;
-                Alert.alert('No datas');
+                Alert.alert('No data');
                 //throw error;
             }
             if (this.state.Username == "" && this.state.Password == "") {
